@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="ElevenLabsExample.ApiService/ElevenLabsExample.ApiService.csproj" />
+  <Project Path="ElevenLabsExample.AppHost/ElevenLabsExample.AppHost.csproj" />
+  <Project Path="ElevenLabsExample.ServiceDefaults/ElevenLabsExample.ServiceDefaults.csproj" />
+  <Project Path="ElevenLabsExample.Tests/ElevenLabsExample.Tests.csproj" />
+  <Project Path="ElevenLabsExample.Web/ElevenLabsExample.Web.csproj" />
+</Solution>

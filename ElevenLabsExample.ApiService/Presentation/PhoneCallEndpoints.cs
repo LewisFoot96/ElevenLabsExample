@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ElevenLabsExample.ApiService.Application;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ElevenLabsExample.ApiService.Presentation;
 
@@ -13,8 +14,10 @@ public static class PhoneCallEndpoints
 
     public static async Task<IResult> CreatePhoneCall(
         [FromBody] CreatePhoneCallDto createPhoneCallDto,
+        ICreatePhoneCallHandler createPhoneCallHandler,
         CancellationToken cancellationToken)
     {
+        await createPhoneCallHandler.CreatePhoneCall(createPhoneCallDto, cancellationToken);
         return TypedResults.Created("");
     }
 }

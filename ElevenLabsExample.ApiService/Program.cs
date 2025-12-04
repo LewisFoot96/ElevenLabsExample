@@ -1,3 +1,4 @@
+using ElevenLabsExample.ApiService.Application;
 using ElevenLabsExample.ApiService.Infrastructure;
 using ElevenLabsExample.ApiService.Presentation;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(optionsAction =>
 {
     optionsAction.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddHttpClient<IElevenLabsService, ElevenLabsService>(client =>
+{
+    client.BaseAddress = new Uri("https://api.eu.residency.elevenlabs.io/v1/convai/twilio/outbound-call");
+});
+builder.Services.AddScoped<ICreatePhoneCallHandler, CreatePhoneCallHandler>();
+builder.Services.AddScoped<IPhoneCallRepository, PhoneCallRepository>();
 
 var app = builder.Build();
 

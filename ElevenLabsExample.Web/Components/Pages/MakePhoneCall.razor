@@ -12,48 +12,48 @@
 
 <p>This component demonstrates showing data loaded from a backend API service.</p>
 
-<EditForm Model="@formData" OnValidSubmit="@HandleValidSubmit" FormName="MakePhoneCall">
+<EditForm Model="@_formData" OnValidSubmit="@HandleValidSubmit" FormName="MakePhoneCall">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="mb-3">
         <label class="form-label">Carer Name</label>
-        <InputText class="form-control" @bind-Value="formData.CarerFirstName" />
+        <InputText class="form-control" @bind-Value="_formData.CarerFirstName" />
     </div>
     <div class="mb-3">
         <label class="form-label">Phone Number</label>
-        <InputNumber class="form-control" @bind-Value="formData.PhoneNumber" />
+        <InputNumber class="form-control" @bind-Value="_formData.PhoneNumber" />
     </div>
     <div class="mb-3">
         <label class="form-label">Visit Date</label>
-        <InputDate class="form-control" @bind-Value="formData.VisitDate" />
+        <InputDate class="form-control" @bind-Value="_formData.VisitDate" />
     </div>
     <div class="mb-3">
         <label class="form-label">Visit Time</label>
-        <InputNumber class="form-control" @bind-Value="formData.VisitTime" />
+        <InputNumber class="form-control" @bind-Value="_formData.VisitTime" />
     </div>
     <div class="mb-3">
         <label class="form-label">Duration</label>
-        <InputNumber class="form-control" @bind-Value="formData.VisitDurationMinutes" />
+        <InputNumber class="form-control" @bind-Value="_formData.VisitDurationMinutes" />
     </div>
     <div class="mb-3">
         <label class="form-label">Duration</label>
-        <InputText class="form-control" @bind-Value="formData.ClientPostcode" />
+        <InputText class="form-control" @bind-Value="_formData.ClientPostcode" />
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
 
 @code {
-    private MakePhoneCallFormData formData = new();
+    private MakePhoneCallFormData _formData = new();
 
 
     private async Task HandleValidSubmit()
     {
         var dto = new CreatePhoneCallDto(
-            formData.CarerFirstName,
-            formData.PhoneNumber,
-            formData.VisitDate,
-            formData.VisitDurationMinutes,
-            formData.ClientPostcode
+            _formData.CarerFirstName,
+            _formData.PhoneNumber,
+            _formData.VisitDate,
+            _formData.VisitDurationMinutes,
+            _formData.ClientPostcode
         );
 
         var success = await PhoneCallApiClient.MakePhoneCallAsync(dto);
@@ -61,7 +61,7 @@
         if (success)
         {
             // minimal UX feedback: clear form (optional)
-            formData = new MakePhoneCallFormData();
+            _formData = new MakePhoneCallFormData();
             StateHasChanged();
         }
         else

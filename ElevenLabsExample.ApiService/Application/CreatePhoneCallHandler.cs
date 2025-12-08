@@ -1,4 +1,5 @@
 ﻿using ElevenLabsExample.ApiService.Infrastructure;
+using ElevenLabsExample.ApiService.Models;
 using ElevenLabsExample.Common;
 
 namespace ElevenLabsExample.ApiService.Application;
@@ -17,7 +18,11 @@ public class CreatePhoneCallHandler : ICreatePhoneCallHandler
 
     public async Task CreatePhoneCall(CreatePhoneCallDto createPhoneCallDto, CancellationToken cancellationToken)
     {
-        await _phoneCallRepository.AddPhoneCall(cancellationToken);
+        //Map dto to domain model. 
+        PhoneCall phoneCall = new();
+        await _phoneCallRepository.AddPhoneCallAsync(phoneCall, cancellationToken);
         await _elevenLabsService.CreateElevenLabsPhoneCall(cancellationToken);
+        await _phoneCallRepository.UpdatePhoneCallStatusAsync(phoneCall.Id, "In-Progress", cancellationToken);
+        
     }
 }

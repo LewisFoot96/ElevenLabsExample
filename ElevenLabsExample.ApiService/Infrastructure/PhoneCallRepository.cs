@@ -1,4 +1,7 @@
 ﻿
+using ElevenLabsExample.ApiService.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace ElevenLabsExample.ApiService.Infrastructure;
 
 public class PhoneCallRepository : IPhoneCallRepository
@@ -8,8 +11,16 @@ public class PhoneCallRepository : IPhoneCallRepository
     {
         _dbContext = dbContext;
     }
-    public Task AddPhoneCall(CancellationToken cancellationToken)
+    public async Task AddPhoneCallAsync(PhoneCall phoneCall, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        _dbContext.PhoneCalls.Add(phoneCall);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task UpdatePhoneCallStatusAsync(Guid phoneCallId, string phoneCallStatus, CancellationToken cancellationToken)
+    {
+        await _dbContext.PhoneCalls.Where(x => x.Id == phoneCallId)
+            .ExecuteUpdateAsync(setters => setters.
+                SetProperty(set => set.Status, phoneCallStatus), cancellationToken);
     }
 }
